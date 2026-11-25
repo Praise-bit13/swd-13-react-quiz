@@ -1,21 +1,54 @@
 import styles from './Question.module.css';
 
-function Question({ question, answers }) {
+function Question({
+  question,
+  questionNumber,
+  totalQuestions,
+  answers,
+  correctAnswer,
+  answer,
+  onAnswer,
+}) {
   return (
     <section className={styles.question} aria-labelledby="question-title">
-      <p className={styles.kicker}>QUESTION 01 <span> / 05</span></p>
+      <p className={styles.kicker}>
+        QUESTION {String(questionNumber).padStart(2, '0')}
+        <span> / {String(totalQuestions).padStart(2, '0')}</span>
+      </p>
       <h1 className={styles.title} id="question-title">{question}</h1>
-      <fieldset className={styles.answers}>
-        <legend className={styles.srOnly}>Choose an answer</legend>
-        {answers.map((answer, index) => (
-          <label className={styles.answer} key={answer}>
-            <input type="radio" name="answer" value={answer} />
-            <span className={styles.letter}>{String.fromCharCode(65 + index)}</span>
-            <span className={styles.answerText}>{answer}</span>
-            <span className={styles.indicator} aria-hidden="true" />
-          </label>
-        ))}
-      </fieldset>
+      <div className={styles.answers} role="group" aria-label="Choose an answer">
+        {answers.map((option, index) => {
+          const isCorrect = answer !== null && index === correctAnswer;
+          const isIncorrect = answer === index && index !== correctAnswer;
+          const answerClass = [
+            styles.answer,
+            isCorrect && styles.answerCorrect,
+            isIncorrect && styles.answerIncorrect,
+          ].filter(Boolean).join(' ');
+          const letter = String.fromCharCode(65 + index);
+          const feedback = isCorrect
+            ? ', correct answer'
+            : isIncorrect
+              ? ', incorrect answer'
+              : '';
+
+          return (
+            <button
+              className={answerClass}
+              key={option}
+              type="button"
+              onClick={() => onAnswer(index)}
+              disabled={answer !== null}
+              aria-pressed={answer === index}
+              aria-label={`${letter} ${option}${feedback}`}
+            >
+              <span className={styles.letter}>{letter}</span>
+              <span className={styles.answerText}>{option}</span>
+              <span className={styles.indicator} aria-hidden="true" />
+            </button>
+          );
+        })}
+      </div>
     </section>
   );
 }

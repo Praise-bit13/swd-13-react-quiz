@@ -45,3 +45,10 @@
   color: #50ad77;
   font-weight: 900;
 }
+
+.highscore {
+  margin: 7px 0 0;
+  color: #aaa9b8;
+  font-size: 9px;
+  font-weight: 650;
+}

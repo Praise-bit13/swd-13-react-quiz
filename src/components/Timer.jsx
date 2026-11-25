@@ -12,7 +12,7 @@ function Timer({ seconds }) {
         <p className={styles.label}>TIME LEFT</p>
         <p className={styles.value}>{formattedTime}</p>
       </div>
-      <span className={styles.static}>STATIC</span>
+      <span className={styles.live} aria-hidden="true">LIVE</span>
     </section>
   );
 }

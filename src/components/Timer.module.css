@@ -39,12 +39,12 @@
   letter-spacing: 0.4px;
 }
 
-.static {
+.live {
   margin-left: auto;
   padding: 4px 6px;
   border-radius: 5px;
   background: #fff;
-  color: #9a98ad;
+  color: #48a66d;
   font-size: 7px;
   font-weight: 850;
   letter-spacing: 0.6px;

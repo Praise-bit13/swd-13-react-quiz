@@ -48,6 +48,44 @@
   margin: 38px 0 42px;
 }
 
+.statusPanel {
+  width: min(100%, 560px);
+  margin: 70px auto;
+  padding: 40px;
+  border: 1px solid #eeedf5;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 16px 45px rgb(45 42 88 / 6%);
+  text-align: center;
+}
+
+.statusIcon {
+  display: grid;
+  width: 62px;
+  height: 62px;
+  place-items: center;
+  margin: 0 auto 17px;
+  border-radius: 20px;
+  background: #f3f0ff;
+  color: #7564e8;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.statusPanel h1 {
+  margin: 0;
+  color: #29283f;
+  font-size: 25px;
+  font-weight: 850;
+  letter-spacing: -0.8px;
+}
+
+.statusPanel p {
+  margin: 10px 0 21px;
+  color: #85849a;
+  font-size: 13px;
+}
+
 .quizMain,
 .quizSidebar {
   border: 1px solid #eeedf5;

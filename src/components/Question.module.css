@@ -28,13 +28,11 @@
 .answers {
   display: grid;
   gap: 10px;
-  margin: 0;
-  padding: 0;
-  border: 0;
 }
 
 .answer {
   display: flex;
+  width: 100%;
   min-height: 56px;
   align-items: center;
   gap: 12px;
@@ -42,37 +40,34 @@
   border: 1px solid #ecebf3;
   border-radius: 13px;
   background: #fff;
+  text-align: left;
   cursor: pointer;
   transition: border-color 140ms ease, background 140ms ease, transform 140ms ease;
 }
 
-.answer:hover {
+.answer:not(:disabled):hover {
   transform: translateY(-1px);
   border-color: #c9c1fa;
   background: #fbfaff;
 }
 
-.answer input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-}
-
-.answer input:checked ~ .letter {
-  border-color: #7564e8;
-  background: #7564e8;
-  color: #fff;
-}
-
-.answer:has(input:checked) {
-  border-color: #a99df2;
-  background: #faf9ff;
-}
-
-.answer:has(input:focus-visible) {
+.answer:focus-visible {
   outline: 3px solid rgb(117 100 232 / 22%);
   outline-offset: 2px;
+}
+
+.answer:disabled {
+  cursor: default;
+}
+
+.answerCorrect {
+  border-color: #8dcea5;
+  background: #f0faf3;
+}
+
+.answerIncorrect {
+  border-color: #e8a0a6;
+  background: #fff3f3;
 }
 
 .letter {
@@ -88,30 +83,53 @@
   font-weight: 800;
 }
 
+.answerCorrect .letter {
+  border-color: #46a96d;
+  background: #46a96d;
+  color: #fff;
+}
+
+.answerIncorrect .letter {
+  border-color: #d76670;
+  background: #d76670;
+  color: #fff;
+}
+
 .answerText {
   color: #48475c;
+  font: inherit;
   font-size: 13px;
   font-weight: 650;
 }
 
 .indicator {
-  width: 16px;
-  height: 16px;
+  display: grid;
+  width: 19px;
+  height: 19px;
+  flex: 0 0 auto;
+  place-items: center;
   margin-left: auto;
   border: 1.5px solid #dcdbe7;
   border-radius: 50%;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
 }
 
-.answer input:checked ~ .indicator {
-  border: 5px solid #7564e8;
+.answerCorrect .indicator {
+  border: 0;
+  background: #46a96d;
 }
 
-.srOnly {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  clip-path: inset(50%);
+.answerCorrect .indicator::before {
+  content: '✓';
+}
+
+.answerIncorrect .indicator {
+  border: 0;
+  background: #d76670;
+}
+
+.answerIncorrect .indicator::before {
+  content: '×';
 }
