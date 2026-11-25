@@ -1,0 +1,51 @@
+.timer {
+  display: flex;
+  min-height: 75px;
+  align-items: center;
+  gap: 11px;
+  padding: 12px;
+  border-radius: 15px;
+  background: #f5f3ff;
+}
+
+.icon {
+  display: grid;
+  width: 35px;
+  height: 35px;
+  place-items: center;
+  border-radius: 11px;
+  background: #e9e4ff;
+  color: #7564e8;
+  font-size: 23px;
+}
+
+.label,
+.value {
+  margin: 0;
+}
+
+.label {
+  color: #88869e;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+}
+
+.value {
+  margin-top: 4px;
+  color: #37354d;
+  font-size: 17px;
+  font-weight: 850;
+  letter-spacing: 0.4px;
+}
+
+.static {
+  margin-left: auto;
+  padding: 4px 6px;
+  border-radius: 5px;
+  background: #fff;
+  color: #9a98ad;
+  font-size: 7px;
+  font-weight: 850;
+  letter-spacing: 0.6px;
+}
