@@ -1,0 +1,88 @@
+.panel {
+  width: min(100%, 560px);
+  margin: 70px auto;
+  padding: 40px;
+  border: 1px solid #eeedf5;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 16px 45px rgb(45 42 88 / 6%);
+  text-align: center;
+}
+
+.icon {
+  display: grid;
+  width: 62px;
+  height: 62px;
+  place-items: center;
+  margin: 0 auto 17px;
+  border-radius: 20px;
+  background: #f3f0ff;
+  color: #7564e8;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.errorIcon {
+  background: #fff0f1;
+  color: #d76670;
+}
+
+.panel h1 {
+  margin: 0;
+  color: #29283f;
+  font-size: 25px;
+  font-weight: 850;
+  letter-spacing: -0.8px;
+}
+
+.panel p {
+  margin: 10px 0 21px;
+  color: #85849a;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.retryButton {
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 12px;
+  background: #7564e8;
+  color: #fff;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.retryButton:hover {
+  background: #6452d8;
+}
+
+.retryButton span {
+  margin-left: 8px;
+}
+
+.spinner {
+  display: block;
+  width: 25px;
+  height: 25px;
+  margin: 0 auto;
+  border: 3px solid #ece8ff;
+  border-top-color: #7564e8;
+  border-radius: 50%;
+  animation: spin 750ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 480px) {
+  .panel {
+    margin: 35px auto;
+    padding: 30px 20px;
+  }
+}

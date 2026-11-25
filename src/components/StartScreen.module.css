@@ -126,55 +126,21 @@
 }
 
 .questionCount {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin: 22px 0 24px;
-  padding: 0;
-  border: 0;
+  padding-top: 15px;
+  border-top: 1px solid #f0eff5;
 }
 
-.questionCount legend {
-  margin-bottom: 10px;
-  padding: 0;
-}
-
-.countOptions {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 9px;
-}
-
-.countOption {
-  position: relative;
-  cursor: pointer;
-}
-
-.countOption input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-}
-
-.countOption span {
-  display: grid;
-  min-height: 40px;
-  place-items: center;
-  border: 1px solid #e8e7f0;
-  border-radius: 10px;
-  color: #77768b;
-  font-size: 12px;
-  font-weight: 750;
-  transition: border-color 150ms ease, background 150ms ease, color 150ms ease;
-}
-
-.countOption input:checked + span {
-  border-color: #7564e8;
+.fixedCount {
+  padding: 7px 10px;
+  border-radius: 9px;
   background: #f4f1ff;
   color: #6957df;
-}
-
-.countOption input:focus-visible + span {
-  outline: 3px solid rgb(117 100 232 / 25%);
-  outline-offset: 2px;
+  font-size: 12px;
+  font-weight: 750;
 }
 
 .startButton {

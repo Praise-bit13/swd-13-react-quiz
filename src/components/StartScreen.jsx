@@ -1,11 +1,13 @@
 import styles from './StartScreen.module.css';
 
-const categories = ['General knowledge', 'Science', 'Nature', 'History', 'Movies'];
-
-function StartScreen({ onStart }) {
+function StartScreen({ onStart, categories, categoryId }) {
   function handleSubmit(event) {
     event.preventDefault();
-    onStart();
+    const formData = new FormData(event.currentTarget);
+    onStart({
+      categoryId: Number(formData.get('category')),
+      difficulty: formData.get('difficulty'),
+    });
   }
 
   return (
@@ -37,45 +39,37 @@ function StartScreen({ onStart }) {
         <div className={styles.fields}>
           <label className={styles.field}>
             <span className={styles.labelText}>Category</span>
-            <select className={styles.select} defaultValue="Nature">
+            <select
+              className={styles.select}
+              name="category"
+              defaultValue={String(categoryId ?? categories[0].id)}
+            >
               {categories.map((category) => (
-                <option key={category} value={category}>{category}</option>
+                <option key={category.id} value={category.id}>{category.name}</option>
               ))}
             </select>
           </label>
 
           <label className={styles.field}>
             <span className={styles.labelText}>Difficulty</span>
-            <select className={styles.select} defaultValue="Easy">
-              <option>Easy</option>
-              <option>Medium</option>
-              <option>Hard</option>
+            <select className={styles.select} name="difficulty" defaultValue="easy">
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
             </select>
           </label>
         </div>
 
-        <fieldset className={styles.questionCount}>
-          <legend className={styles.labelText}>Number of questions</legend>
-          <div className={styles.countOptions}>
-            {[5, 10, 15].map((count, index) => (
-              <label className={styles.countOption} key={count}>
-                <input
-                  type="radio"
-                  name="question-count"
-                  value={count}
-                  defaultChecked={index === 0}
-                />
-                <span>{count}</span>
-              </label>
-            ))}
-          </div>
-        </fieldset>
+        <div className={styles.questionCount}>
+          <span className={styles.labelText}>Number of questions</span>
+          <span className={styles.fixedCount}>10 questions</span>
+        </div>
 
         <button className={styles.startButton} type="submit">
           Let&apos;s play <span aria-hidden="true">→</span>
         </button>
         <p className={styles.footnote}>
-          <span aria-hidden="true">⚡</span> Takes about 2 minutes
+          <span aria-hidden="true">⚡</span> Takes about 3 minutes
         </p>
       </form>
 
