@@ -1,6 +1,6 @@
 import styles from './StartScreen.module.css';
 
-function StartScreen({ onStart, categories, categoryId }) {
+function StartScreen({ onStart, categories, categoryId, difficulty }) {
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -52,7 +52,7 @@ function StartScreen({ onStart, categories, categoryId }) {
 
           <label className={styles.field}>
             <span className={styles.labelText}>Difficulty</span>
-            <select className={styles.select} name="difficulty" defaultValue="easy">
+            <select className={styles.select} name="difficulty" defaultValue={difficulty}>
               <option value="easy">Easy</option>
               <option value="medium">Medium</option>
               <option value="hard">Hard</option>

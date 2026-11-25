@@ -49,6 +49,13 @@ function Question({
           );
         })}
       </div>
+      <span className={styles.srOnly} role="status" aria-live="polite" aria-atomic="true">
+        {answer === null
+          ? ''
+          : answer === correctAnswer
+            ? 'Correct!'
+            : `Incorrect. The correct answer is ${answers[correctAnswer]}.`}
+      </span>
     </section>
   );
 }

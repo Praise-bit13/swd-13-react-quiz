@@ -1,4 +1,5 @@
 import { useEffect, useReducer } from 'react';
+import useLocalStorageState from '../hooks/useLocalStorageState.js';
 import StartScreen from './StartScreen.jsx';
 import LoadingScreen from './LoadingScreen.jsx';
 import ErrorScreen from './ErrorScreen.jsx';
@@ -224,9 +225,33 @@ function isAbortError(error) {
 }
 
 function App() {
-  const [state, dispatch] = useReducer(quizReducer, initialState);
+  const [persistedHighscore, setPersistedHighscore] = useLocalStorageState(
+    'quiz-highscore',
+    0,
+  );
+  const [lastSettings, setLastSettings] = useLocalStorageState(
+    'quiz-last-settings',
+    { categoryId: null, difficulty: 'easy' },
+  );
+  const savedSettings = lastSettings && typeof lastSettings === 'object'
+    ? lastSettings
+    : { categoryId: null, difficulty: 'easy' };
+  const [state, dispatch] = useReducer(quizReducer, {
+    ...initialState,
+    highscore: Number.isFinite(persistedHighscore) && persistedHighscore >= 0
+      ? persistedHighscore
+      : 0,
+    categoryId: savedSettings.categoryId ?? null,
+    difficulty: savedSettings.difficulty ?? 'easy',
+  });
   const currentQuestion = state.questions[state.index];
   const maxPoints = state.questions.length;
+
+  useEffect(() => {
+    if (state.highscore !== persistedHighscore) {
+      setPersistedHighscore(state.highscore);
+    }
+  }, [state.highscore, persistedHighscore, setPersistedHighscore]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -321,6 +346,29 @@ function App() {
     return () => window.clearInterval(intervalId);
   }, [state.status, state.answer, state.index]);
 
+  useEffect(() => {
+    if (state.status !== 'active') return undefined;
+
+    function handleKeyDown(event) {
+      if (event.altKey || event.ctrlKey || event.metaKey) return;
+
+      if (/^[1-4]$/.test(event.key) && state.answer === null) {
+        event.preventDefault();
+        dispatch({ type: 'newAnswer', answer: Number(event.key) - 1 });
+      } else if (event.key === 'Enter' && state.answer !== null) {
+        event.preventDefault();
+        if (state.index === state.questions.length - 1) {
+          dispatch({ type: 'finish' });
+        } else {
+          dispatch({ type: 'nextQuestion' });
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [state.status, state.answer, state.index, state.questions.length]);
+
   return (
     <main className={styles.app}>
       <header className={styles.header}>
@@ -347,7 +395,11 @@ function App() {
         <StartScreen
           categories={state.categories}
           categoryId={state.categoryId}
-          onStart={(settings) => dispatch({ type: 'start', ...settings })}
+          difficulty={state.difficulty}
+          onStart={(settings) => {
+            setLastSettings(settings);
+            dispatch({ type: 'start', ...settings });
+          }}
         />
       )}
 
@@ -400,7 +452,9 @@ function App() {
             />
             <div className={styles.quizFooter}>
               <span className={styles.keyboardHint}>
-                {state.answer === null ? 'Pick your best answer' : 'Nice work!'}
+                {state.answer === null
+                  ? 'Pick your best answer · press 1–4'
+                  : 'Nice work! Press Enter to continue.'}
               </span>
               {state.answer !== null && (
                 <button
